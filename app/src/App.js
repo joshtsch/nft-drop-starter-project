@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import twitterLogo from "./assets/twitter-logo.svg";
 import CandyMachine from "./CandyMachine";
+import { Screen, NavBar, Footer } from "@joshtsch/legos";
+import avatar from "./assets/0.png";
 
 // Constants
 const TWITTER_HANDLE = "_buildspace";
@@ -66,26 +68,52 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <div className="container">
-        <div className="header-container">
-          <p className="header">🍭 Candy Drop</p>
-          <p className="sub-text">NFT drop machine with fair mint</p>
+    <Screen>
+      <NavBar avatar={avatar} walletAddress={walletAddress} />
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          justifyContent: "center",
+          padding: "0 2.5rem",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: "60px",
+              fontWeight: "bold",
+              fontFamily: "Emilys Candy",
+            }}
+          >
+            🍭 Candy Drop
+          </p>
+          <p style={{ fontSize: "25px" }}>NFT drop machine with fair mint</p>
           {!walletAddress && renderNotConnectedContainer()}
-        </div>
-        {/* Check for walletAddress and then pass in walletAddress */}
-        {walletAddress && <CandyMachine walletAddress={window.solana} />}
-        <div className="footer-container">
-          <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
-          <a
-            className="footer-text"
-            href={TWITTER_LINK}
-            target="_blank"
-            rel="noreferrer"
-          >{`built on @${TWITTER_HANDLE}`}</a>
+          <div style={{ width: "100%" }}>
+            {walletAddress && <CandyMachine walletAddress={window.solana} />}
+          </div>
         </div>
       </div>
-    </div>
+      <Footer
+        socialMedia={[
+          {
+            alt: "Twitter Logo",
+            logo: twitterLogo,
+            href: TWITTER_LINK,
+          },
+        ]}
+      />
+    </Screen>
   );
 };
 
